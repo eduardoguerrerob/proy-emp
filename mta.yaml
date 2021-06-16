@@ -1,0 +1,56 @@
+_schema-version: "3.2"
+ID: proy-emp
+version: 0.0.1
+modules:
+- name: proy-emp-approuter
+  type: approuter.nodejs
+  path: proy-emp-approuter
+  requires:
+  - name: proy-emp_html_repo_runtime
+  - name: dest_proy-emp
+  parameters:
+    disk-quota: 256M
+    memory: 256M
+- name: proy-emp_ui_deployer
+  type: com.sap.application.content
+  path: .
+  requires:
+  - name: proy-emp_html_repo_host
+    parameters:
+      content-target: true
+  build-parameters:
+    build-result: resources
+    requires:
+    - artifacts:
+      - employeeui5-content.zip
+      name: employeeui5
+      target-path: resources/
+- name: employeeui5
+  type: html5
+  path: employeeui5
+  build-parameters:
+    builder: custom
+    commands:
+    - npm run build
+    supported-platforms: []
+resources:
+- name: proy-emp_html_repo_runtime
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-runtime
+- name: proy-emp_html_repo_host
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: html5-apps-repo
+    service-plan: app-host
+- name: dest_proy-emp
+  type: org.cloudfoundry.managed-service
+  parameters:
+    service: destination
+    service-plan: lite
+build-parameters:
+  before-all:
+  - builder: custom
+    commands:
+    - npm install

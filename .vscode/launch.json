@@ -1,0 +1,25 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Run proy-emp-employeeui5",
+      "type": "node",
+      "request": "launch",
+      "program": "${workspaceFolder}/proy-emp-approuter/node_modules/@sap/html5-repo-mock/index.js",
+      "args": [
+        "--standalone",
+        "/egbemployeeui5/index.html",
+        "--ui5",
+        "{\"version\":\".\"}"
+      ],
+      "cwd": "${workspaceFolder}/employeeui5",
+      "env": {
+        "PORT": "6004",
+        "MOCK_LOOKUP_DIRS": "[\"webapp\"]",
+        "run.config": "{\"handlerId\":\"ui5_run_config_handler_id\",\"runnableId\":\"/home/user/projects/proy-emp/employeeui5\"}"
+      },
+      "envFile": "${workspaceFolder}/employeeui5/.env1",
+      "preLaunchTask": "Build proy-emp"
+    }
+  ]
+}
