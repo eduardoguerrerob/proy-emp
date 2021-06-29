@@ -34,39 +34,7 @@
                         
                         </HBox>
                         <HBox >
-                            <Panel>
-                                <Button id="btnShowCity" text="{i18n>showCity}" 
-                                        visible="{jsonConfig>/visibleBtnShowCity}" press="onShowCity"/>
-                                <Button id="btnHideCity" text="{i18n>hideCity}" 
-                                        visible="{jsonConfig>/visibleBtnHideCity}" press="onHideCity"/>
-                                <Table id="tableEmployee" items="{jsonEmployees>/}">
-                                    <columns>
-                                        <Column visible="{jsonConfig>/visibleID}">
-                                            <Label text="{i18n>tableId}"/>
-                                        </Column>
-                                        <Column visible="{jsonConfig>/visibleName}">
-                                            <Label text="{i18n>tableName}"/>
-                                        </Column>
-                                        <Column visible="{jsonConfig>/visibleCountry}">
-                                            <Label text="{i18n>tableCountry}"/>
-                                        </Column>
-                                        <Column visible="{jsonConfig>/visibleCity}">
-                                            <Label text="{i18n>tableCity}"/>
-                                        </Column>
-                                    </columns>
-                                    <items>
-                                        <ColumnListItem type="Active" press="showOrders">
-                                            <cells>
-                                                <Label text="{jsonEmployees>EmployeeID}"/>
-                                                <Label text="{jsonEmployees>LastName}, {jsonEmployees>FirstName}"/>
-                                                <Label text="{jsonEmployees>Country}"/>
-                                                <Label text="{jsonEmployees>City}"/>
-                                            </cells>
-                                        </ColumnListItem>
-                                    </items>
-                                </Table>
-                                <HBox id="ordersTable"></HBox>
-                            </Panel>
+                            <core:Fragment fragmentName="egb.employeeui5.fragment.TableEmployee" type="XML"/>
                         </HBox>
                     </content>
 				</Page>

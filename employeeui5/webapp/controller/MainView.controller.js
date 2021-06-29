@@ -18,17 +18,17 @@ sap.ui.define([
         var Main = Controller.extend("egb.employeeui5.controller.MainView", {});
 
         function onInit() {
-            
+
             var oView = this.getView();
             //var i18nBundle = oView.getModel("i18n").getResourceBundle();
 
             var oJSONModelEmp = new JSONModel();
             oJSONModelEmp.loadData("./localService/mockdata/Employees.json");
-            oView.setModel(oJSONModelEmp,"jsonEmployees");
+            oView.setModel(oJSONModelEmp, "jsonEmployees");
 
             var oJSONModelCountries = new JSONModel();
             oJSONModelCountries.loadData("./localService/mockdata/Countries.json");
-            oView.setModel(oJSONModelCountries,"jsonCountries");
+            oView.setModel(oJSONModelCountries, "jsonCountries");
 
             // config model
             var oJSONModelConfig = new JSONModel({
@@ -46,11 +46,11 @@ sap.ui.define([
         function onFilter() {
             var oJSONCountries = this.getView().getModel("jsonCountries").getData();
             var aFilters = [];
-            if(oJSONCountries.EmployeeId !== "" && oJSONCountries.EmployeeId !== undefined) {
-                aFilters.push(new Filter("EmployeeID", FilterOperator.EQ, oJSONCountries.EmployeeId ));
+            if (oJSONCountries.EmployeeId !== "" && oJSONCountries.EmployeeId !== undefined) {
+                aFilters.push(new Filter("EmployeeID", FilterOperator.EQ, oJSONCountries.EmployeeId));
             }
-            if(oJSONCountries.CountryKey !== "" && oJSONCountries.CountryKey !== undefined) {
-                aFilters.push(new Filter("Country", FilterOperator.EQ, oJSONCountries.CountryKey ));
+            if (oJSONCountries.CountryKey !== "" && oJSONCountries.CountryKey !== undefined) {
+                aFilters.push(new Filter("Country", FilterOperator.EQ, oJSONCountries.CountryKey));
             }
 
             var oList = this.getView().byId("tableEmployee");
@@ -87,6 +87,25 @@ sap.ui.define([
         };
 
         function showOrders(oEvent) {
+            // get selected controller
+            var iconPressed = oEvent.getSource();
+            // context from model
+            var oContext = iconPressed.getBindingContext("jsonEmployees");
+            // instance of fragment
+            if (!this._oDialogOrders) {
+                this._oDialogOrders = sap.ui.xmlfragment("egb.employeeui5.fragment.DialogOrders", this);
+                this.getView().addDependent(this._oDialogOrders);  //NO ENTIENDO ESTA FUNCION
+            }
+            // dialog binding to context for having access to data of seleted item
+            this._oDialogOrders.bindElement("jsonEmployees>" + oContext.getPath());   //NO ENTIENDO ESTA FUNCION
+            this._oDialogOrders.open();
+        };
+
+        function onCloseOrders() {
+            this._oDialogOrders.close();
+        };
+
+        function showOrdersOld(oEvent) {
             const $ordersTable = this.getView().byId("ordersTable");
             $ordersTable.destroyItems();
 
@@ -96,12 +115,12 @@ sap.ui.define([
             const orders = objectContext.Orders;
 
             let orderItems = [];
-            for (var i in orders){
+            for (var i in orders) {
                 orderItems.push(new sap.m.ColumnListItem({
                     cells: [
-                        new sap.m.Label({text: orders[i].OrderID}),
-                        new sap.m.Label({text: orders[i].Freight}),
-                        new sap.m.Label({text: orders[i].ShipAddress})
+                        new sap.m.Label({ text: orders[i].OrderID }),
+                        new sap.m.Label({ text: orders[i].Freight }),
+                        new sap.m.Label({ text: orders[i].ShipAddress })
                     ]
                 }));
             }
@@ -109,9 +128,9 @@ sap.ui.define([
             let newTable = new sap.m.Table({
                 width: "auto",
                 columns: [
-                    new sap.m.Column({header: new sap.m.Label({text: "{i18n>orderID}"})}),
-                    new sap.m.Column({header: new sap.m.Label({text: "{i18n>freight}"})}),
-                    new sap.m.Column({header: new sap.m.Label({text: "{i18n>shipAddress}"})}),
+                    new sap.m.Column({ header: new sap.m.Label({ text: "{i18n>orderID}" }) }),
+                    new sap.m.Column({ header: new sap.m.Label({ text: "{i18n>freight}" }) }),
+                    new sap.m.Column({ header: new sap.m.Label({ text: "{i18n>shipAddress}" }) }),
                 ],
                 items: orderItems
             }).addStyleClass("sapUiSmallMargin");
@@ -126,34 +145,34 @@ sap.ui.define([
 
             var columnOrderID = new sap.m.Column();
             var labelOrderID = new sap.m.Label();
-            labelOrderID.bindProperty("text","i18n>orderID");
+            labelOrderID.bindProperty("text", "i18n>orderID");
             columnOrderID.setHeader(labelOrderID);
             newTableJSON.addColumn(columnOrderID);
 
             var columnFreight = new sap.m.Column();
             var labelFreight = new sap.m.Label();
-            labelFreight.bindProperty("text","i18n>freight");
+            labelFreight.bindProperty("text", "i18n>freight");
             columnFreight.setHeader(labelFreight);
             newTableJSON.addColumn(columnFreight);
 
             var columnShipAddress = new sap.m.Column();
             var labelShipAddress = new sap.m.Label();
-            labelShipAddress.bindProperty("text","i18n>shipAddress");
+            labelShipAddress.bindProperty("text", "i18n>shipAddress");
             columnShipAddress.setHeader(labelShipAddress);
             newTableJSON.addColumn(columnShipAddress);
 
             var columnListItem = new sap.m.ColumnListItem();
 
             var cellOrderID = new sap.m.Label();
-            cellOrderID.bindProperty("text","jsonEmployees>OrderID");
+            cellOrderID.bindProperty("text", "jsonEmployees>OrderID");
             columnListItem.addCell(cellOrderID);
 
             var cellFreight = new sap.m.Label();
-            cellFreight.bindProperty("text","jsonEmployees>Freight");
+            cellFreight.bindProperty("text", "jsonEmployees>Freight");
             columnListItem.addCell(cellFreight);
 
             var cellShipAddress = new sap.m.Label();
-            cellShipAddress.bindProperty("text","jsonEmployees>ShipAddress");
+            cellShipAddress.bindProperty("text", "jsonEmployees>ShipAddress");
             columnListItem.addCell(cellShipAddress);
 
             var oBindingInfo = {
@@ -186,7 +205,7 @@ sap.ui.define([
             };
         };
 
-    
+
         Main.prototype.onInit = onInit;
         Main.prototype.onFilter = onFilter;
         Main.prototype.onClearFilter = onClearFilter;
@@ -194,6 +213,7 @@ sap.ui.define([
         Main.prototype.onShowCity = onShowCity;
         Main.prototype.onHideCity = onHideCity;
         Main.prototype.showOrders = showOrders;
+        Main.prototype.onCloseOrders = onCloseOrders;
 
         return Main;
     });
