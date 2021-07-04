@@ -15,32 +15,13 @@ sap.ui.define([
     function (Controller, JSONModel, Filter, FilterOperator) {
         "use strict";
 
-        var Main = Controller.extend("egb.employeeui5.controller.MainView", {});
+        var Main = Controller.extend("egb.employeeui5.controller.MasterEmployee", {});
 
         function onInit() {
 
-            var oView = this.getView();
-            //var i18nBundle = oView.getModel("i18n").getResourceBundle();
+            //create attribute - instance of event bus
+            this._bus = sap.ui.getCore().getEventBus();
 
-            var oJSONModelEmp = new JSONModel();
-            oJSONModelEmp.loadData("./localService/mockdata/Employees.json");
-            oView.setModel(oJSONModelEmp, "jsonEmployees");
-
-            var oJSONModelCountries = new JSONModel();
-            oJSONModelCountries.loadData("./localService/mockdata/Countries.json");
-            oView.setModel(oJSONModelCountries, "jsonCountries");
-
-            // config model
-            var oJSONModelConfig = new JSONModel({
-                visibleID: true,
-                visibleName: true,
-                visibleCountry: true,
-                visibleCity: false,
-                visibleBtnShowCity: true,
-                visibleBtnHideCity: false
-            });
-
-            oView.setModel(oJSONModelConfig, "jsonConfig");
         };
 
         function onFilter() {
@@ -188,6 +169,14 @@ sap.ui.define([
 
         };
 
+        function showEmployee(oEvent) {
+            //path of selected employee to send through the bus
+            var path = oEvent.getSource().getBindingContext("jsonEmployees").getPath();
+            // publish event by bus, it needs category, event name and path
+            this._bus.publish("flexible", "showEmployee", path);
+
+        };
+
 
         Main.prototype.onValidate = function () {
             var inputEmployee = this.getView().byId("inputEmployee");
@@ -214,6 +203,7 @@ sap.ui.define([
         Main.prototype.onHideCity = onHideCity;
         Main.prototype.showOrders = showOrders;
         Main.prototype.onCloseOrders = onCloseOrders;
+        Main.prototype.showEmployee = showEmployee;
 
         return Main;
     });
