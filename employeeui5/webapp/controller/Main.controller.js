@@ -50,6 +50,14 @@ sap.ui.define([
                 detailView.bindElement("jsonEmployees>" + path);
                 //set property with layout 2 columns
                 this.getView().getModel("jsonLayouts").setProperty("/ActiveKey", "TwoColumnsMidExpanded");
+
+                // instance of incidence model
+                var incidenceModel = new sap.ui.model.json.JSONModel([]);
+                // set model to view
+                detailView.setModel(incidenceModel, "incidenceModel");
+                // clean content of panel element
+                detailView.byId("tableIncidence").removeAllContent();
+
             }
 
         })
