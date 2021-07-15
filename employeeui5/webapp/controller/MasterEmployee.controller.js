@@ -71,14 +71,14 @@ sap.ui.define([
             // get selected controller
             var iconPressed = oEvent.getSource();
             // context from model
-            var oContext = iconPressed.getBindingContext("jsonEmployees");
+            var oContext = iconPressed.getBindingContext("odataNorthwind");
             // instance of fragment
             if (!this._oDialogOrders) {
                 this._oDialogOrders = sap.ui.xmlfragment("egb.employeeui5.fragment.DialogOrders", this);
                 this.getView().addDependent(this._oDialogOrders);  //NO ENTIENDO ESTA FUNCION
             }
             // dialog binding to context for having access to data of seleted item
-            this._oDialogOrders.bindElement("jsonEmployees>" + oContext.getPath());   //NO ENTIENDO ESTA FUNCION
+            this._oDialogOrders.bindElement("odataNorthwind>" + oContext.getPath());   //NO ENTIENDO ESTA FUNCION
             this._oDialogOrders.open();
         };
 
@@ -171,7 +171,7 @@ sap.ui.define([
 
         function showEmployee(oEvent) {
             //path of selected employee to send through the bus
-            var path = oEvent.getSource().getBindingContext("jsonEmployees").getPath();
+            var path = oEvent.getSource().getBindingContext("odataNorthwind").getPath();
             // publish event by bus, it needs category, event name and path
             this._bus.publish("flexible", "showEmployee", path);
 

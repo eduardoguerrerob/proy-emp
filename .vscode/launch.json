@@ -18,7 +18,7 @@
         "MOCK_LOOKUP_DIRS": "[\"webapp\"]",
         "run.config": "{\"handlerId\":\"ui5_run_config_handler_id\",\"runnableId\":\"/home/user/projects/proy-emp/employeeui5\"}"
       },
-      "envFile": "${workspaceFolder}/employeeui5/.env2",
+      "envFile": "${workspaceFolder}/employeeui5/.env1",
       "preLaunchTask": "Build proy-emp"
     }
   ]
