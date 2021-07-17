@@ -1,14 +1,16 @@
 // @ts-nocheck
 sap.ui.define([
     "sap/ui/core/mvc/Controller",
-    "sap/ui/model/json/JSONModel"
+    "sap/ui/model/json/JSONModel",
+    "sap/m/MessageBox"
 ],
     /**
      * 
      * @param {typeof sap.ui.core.mvc.Controller} Controller 
-     * @param {typeof sap.ui.model.json.JSONModel} JSONModel 
+     * @param {typeof sap.ui.model.json.JSONModel} JSONModel
+     * @param {typeof sap.m.MessageBox} MessageBox
      */
-    function (Controller, JSONModel) {
+    function (Controller, JSONModel, MessageBox) {
         return Controller.extend("egb.employeeui5.controller.Main", {
 
             onBeforeRendering: function () {
@@ -111,7 +113,8 @@ sap.ui.define([
                     this.getView().getModel("incidenceModel").create("/IncidentsSet", body, {
                         success: function () {
                             this.onReadODataIncidence.bind(this)(employeeId);
-                            sap.m.MessageToast.show(oResourceBundle.getText("odataSaveOK"));
+                            //sap.m.MessageToast.show(oResourceBundle.getText("odataSaveOK"));
+                            MessageBox.success(oResourceBundle.getText("odataSaveOK"));
                         }.bind(this),
                         error: function () {
                             sap.m.MessageToast.show(oResourceBundle.getText("odataSaveKO"));
@@ -166,6 +169,10 @@ sap.ui.define([
                         tableIncidence.removeAllContent();
                         // crear fragment for new incidence data using Employee Details controller
                         for (var incidence in data.results) {
+                            // mutation
+                            data.results[incidence]._validateDate = true;
+                            data.results[incidence].enableSave = false;
+
                             var newIncidence = sap.ui.xmlfragment("egb.employeeui5.fragment.NewIncidence",
                                 this._detailEmployeeView.getController());
                             // add dependecies
