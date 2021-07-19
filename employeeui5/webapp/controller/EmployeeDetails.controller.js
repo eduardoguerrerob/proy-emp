@@ -1,6 +1,6 @@
 
 sap.ui.define([
-    "sap/ui/core/mvc/Controller",
+    "egb/employeeui5/controller/Base.controller",
     "egb/employeeui5/model/formatter",
     "sap/m/MessageBox"
 ],
@@ -9,7 +9,7 @@ sap.ui.define([
      * @param {typeof sap.ui.core.mvc.Controller} Controller 
      * @param {typeof sap.m.MessageBox} MessageBox
      */
-    function (Controller, formatter, MessageBox) {
+    function (Base, formatter, MessageBox) {
 
         function onInit() {
             this._bus = sap.ui.getCore().getEventBus();
@@ -166,16 +166,8 @@ sap.ui.define([
             contextObj.TypeX = true;
         };
 
-        function toOrderDetails(oEvent) {
-            const orderID = oEvent.getSource().getBindingContext("odataNorthwind").getObject().OrderID;
-            const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
-            oRouter.navTo("RouteOrderDetails", {
-                OrderID: orderID
-            });
-        };
 
-
-        var MainEmployeeDetails = Controller.extend("egb.employeeui5.controller.EmployeeDetails", {});
+        var MainEmployeeDetails = Base.extend("egb.employeeui5.controller.EmployeeDetails", {});
 
         MainEmployeeDetails.prototype.onInit = onInit;
         MainEmployeeDetails.prototype.onCreateIncidence = onCreateIncidence;
@@ -185,7 +177,6 @@ sap.ui.define([
         MainEmployeeDetails.prototype.onChangeCreationDate = onChangeCreationDate;
         MainEmployeeDetails.prototype.onChangeReason = onChangeReason;
         MainEmployeeDetails.prototype.onChangeType = onChangeType;
-        MainEmployeeDetails.prototype.toOrderDetails = toOrderDetails;
 
         return MainEmployeeDetails;
     });
