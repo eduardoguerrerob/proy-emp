@@ -1,0 +1,11 @@
+<mvc:View controllerName="egb.employeeui5.controller.App"
+    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core">
+
+    <Shell id="shell">
+        <App id="app">
+
+        </App>
+    </Shell>
+</mvc:View>

@@ -166,6 +166,14 @@ sap.ui.define([
             contextObj.TypeX = true;
         };
 
+        function toOrderDetails(oEvent) {
+            const orderID = oEvent.getSource().getBindingContext("odataNorthwind").getObject().OrderID;
+            const oRouter = sap.ui.core.UIComponent.getRouterFor(this);
+            oRouter.navTo("RouteOrderDetails", {
+                OrderID: orderID
+            });
+        };
+
 
         var MainEmployeeDetails = Controller.extend("egb.employeeui5.controller.EmployeeDetails", {});
 
@@ -177,6 +185,7 @@ sap.ui.define([
         MainEmployeeDetails.prototype.onChangeCreationDate = onChangeCreationDate;
         MainEmployeeDetails.prototype.onChangeReason = onChangeReason;
         MainEmployeeDetails.prototype.onChangeType = onChangeType;
+        MainEmployeeDetails.prototype.toOrderDetails = toOrderDetails;
 
         return MainEmployeeDetails;
     });
