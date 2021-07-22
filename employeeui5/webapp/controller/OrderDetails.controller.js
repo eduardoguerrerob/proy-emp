@@ -38,9 +38,43 @@ sap.ui.define([
                 }
             },
 
-            onClearSignature: function(oEvent) {
+            onClearSignature: function (oEvent) {
                 var signature = this.byId("signature");
                 signature.clear();
+            },
+
+            factoryOrderDetails: function (listId, oContext) {
+
+                var contextObject = oContext.getObject();
+                contextObject.Currency = 'EUR';
+                const propertyUnitInStock = "/Products(" + contextObject.ProductID + ")/UnitsInStock";
+
+                var unitsInStock = oContext.getModel().getProperty(propertyUnitInStock);
+
+
+                if (contextObject.Quantity <= unitsInStock) {
+                    let objectListItem = new sap.m.ObjectListItem({
+                        title: "{odataNorthwind>/Products(" + contextObject.ProductID + ")/ProductName} ({odataNorthwind>Quantity})",
+                        number: "{parts: [{path: 'odataNorthwind>UnitPrice'},{path: 'odataNorthwind>Currency'}], type:'sap.ui.model.type.Currency',formatOptions: {showMeasure: false}}",
+                        numberUnit: "{odataNorthwind>Currency}"
+                    });
+                    return objectListItem;
+                }
+                else {
+                    let labelProd = "{odataNorthwind>/Products(" + contextObject.ProductID + ")/ProductName} ({odataNorthwind>Quantity})";
+                    let customListItem = new sap.m.CustomListItem({
+                        content: [
+                            new sap.m.Bar({
+                                contentLeft: new sap.m.Label({ text: labelProd }),
+                                contentMiddle: new sap.m.ObjectStatus({text: "{i18n>availableStock}" + "(" + unitsInStock + ")", 
+                                              state: "Error" }),
+                                contentRight: new sap.m.Label({text: "{parts: [{path: 'odataNorthwind>UnitPrice'},{path: 'odataNorthwind>Currency'}], type:'sap.ui.model.type.Currency'}"})
+                            })
+                        ]
+                    });
+                    return customListItem;
+                }
+                
             }
 
         })
