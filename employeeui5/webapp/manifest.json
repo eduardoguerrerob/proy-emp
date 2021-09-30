@@ -31,74 +31,7 @@
                     "odataVersion": "2.0",
                     "localUri": "localService/YSAPUI5_SRV_01/metadata.xml"
                 }
-            }
-        }
-    },
-    "sap.ui": {
-        "technology": "UI5",
-        "icons": {
-            "icon": "",
-            "favIcon": "",
-            "phone": "",
-            "phone@2": "",
-            "tablet": "",
-            "tablet@2": ""
-        },
-        "deviceTypes": {
-            "desktop": true,
-            "tablet": true,
-            "phone": true
-        }
-    },
-    "sap.ui5": {
-        "flexEnabled": false,
-        "rootView": {
-            "viewName": "egb.employeeui5.view.App",
-            "type": "XML",
-            "async": true,
-            "id": "app"
-        },
-        "dependencies": {
-            "minUI5Version": "1.60.1",
-            "libs": {
-                "sap.ui.core": {},
-                "sap.m": {},
-                "sap.ui.layout": {}
-            }
-        },
-        "contentDensities": {
-            "compact": true,
-            "cozy": true
-        },
-        "models": {
-            "i18n": {
-                "type": "sap.ui.model.resource.ResourceModel",
-                "settings": {
-                    "bundleName": "egb.employeeui5.i18n.i18n"
-                }
-            },
-            "odataNorthwind": {
-                "dataSource": "Northwind.svc",
-                "preload": true,
-                "settings": {
-                    "defaultOperationMode": "Server",
-                    "defaultBindingMode": "OneWay",
-                    "defaultCountMode": "Request",
-                    "refreshAfterChange": false
-                }
-            },
-            "incidenceModel": {
-                "type": "sap.ui.model.odata.v2.ODataModel",
-                "dataSource": "YSAPUI5_SRV_01",
-                "preload": true,
-                "settings": {
-                    "defaultOperationMode": "Server",
-                    "defaultBindingMode": "OneWay",
-                    "defaultCountMode": "Request",
-                    "refreshAfterChange": false,
-                    "useBatch": false,
-                    "defaultUpdateMethod": "Put"
-                }
+            }L.............
             }
         },
         "resources": {
